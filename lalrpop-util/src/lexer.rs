@@ -74,7 +74,7 @@ pub struct Matcher<'input, 'builder, E> {
 }
 
 impl<'input, 'builder, E> Iterator for Matcher<'input, 'builder, E> {
-    type Item = Result<(usize, Token<'input>, usize), ParseError<usize, Token<'input>, E>>;
+    type Item = Result<(usize, Token<'input>, usize), ParseError<usize, Token<'input>, LexerError, E>>;
 
     fn next(&mut self) -> Option<Self::Item> {
         loop {
