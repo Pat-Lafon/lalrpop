@@ -37,18 +37,21 @@ impl Log {
     }
 }
 
+#[macro_export]
 macro_rules! log {
     ($session:expr, $level:ident, $($args:expr),*) => {
         $session.log(crate::log::Level::$level, || ::std::fmt::format(format_args!($($args),*)))
     }
 }
 
+#[macro_export]
 macro_rules! debug {
     ($($args:expr),*) => {
         log!(crate::tls::Tls::session(), Debug, $($args),*)
     }
 }
 
+#[macro_export]
 macro_rules! profile {
     ($session:expr, $phase_name:expr, $action:expr) => {{
         log!($session, Verbose, "Phase `{}` begun", $phase_name);

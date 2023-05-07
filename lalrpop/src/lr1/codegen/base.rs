@@ -8,6 +8,8 @@ use crate::rust::RustWrite;
 use crate::util::Sep;
 use std::io::{self, Write};
 
+use crate::{debug, log, rust};
+
 /// Base struct for various kinds of code generator. The flavor of
 /// code generator is customized by supplying distinct types for `C`
 /// (e.g., `self::ascent::RecursiveAscent`).

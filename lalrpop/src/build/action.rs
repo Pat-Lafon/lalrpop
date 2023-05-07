@@ -31,6 +31,7 @@
 //! the "internal tokenizer".
 
 use crate::grammar::repr as r;
+use crate::rust;
 use crate::rust::RustWrite;
 use std::io::{self, Write};
 

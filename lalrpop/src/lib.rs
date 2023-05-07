@@ -20,7 +20,6 @@ extern crate regex_syntax;
 extern crate string_cache;
 extern crate term;
 extern crate tiny_keccak;
-extern crate unicode_xid;
 
 #[cfg_attr(feature = "test", macro_use)]
 extern crate lalrpop_util;
@@ -28,27 +27,11 @@ extern crate lalrpop_util;
 #[cfg(test)]
 extern crate rand;
 
-// hoist the modules that define macros up earlier
-#[macro_use]
-mod rust;
-#[macro_use]
-mod log;
-
 mod api;
 mod build;
 mod collections;
-mod file_text;
-mod grammar;
-mod kernel_set;
-mod lexer;
 mod lr1;
-mod message;
 mod normalize;
-mod parser;
-mod session;
-mod tls;
-mod tok;
-mod util;
 
 #[cfg(test)]
 mod generate;
@@ -58,4 +41,5 @@ mod test_util;
 pub use crate::api::process_root;
 pub use crate::api::process_root_unconditionally;
 pub use crate::api::Configuration;
-use ascii_canvas::style;
+
+pub use lalrpop_parser::*;

@@ -6,6 +6,8 @@ use crate::grammar::parse_tree as pt;
 use crate::grammar::repr as r;
 use crate::session::Session;
 
+use crate::{log, profile};
+
 pub type NormResult<T> = Result<T, NormError>;
 
 #[derive(Clone, Debug)]

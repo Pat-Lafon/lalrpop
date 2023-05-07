@@ -12,6 +12,8 @@ use crate::message::Message;
 use crate::tls::Tls;
 use itertools::Itertools;
 
+use crate::{debug, log};
+
 #[cfg(test)]
 mod test;
 

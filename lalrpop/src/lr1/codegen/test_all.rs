@@ -10,6 +10,8 @@ use std::io::{self, Write};
 
 use super::base::CodeGenerator;
 
+use crate::rust;
+
 pub fn compile<'grammar, W: Write>(
     grammar: &'grammar Grammar,
     user_start_symbol: NonterminalString,

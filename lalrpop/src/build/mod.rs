@@ -19,6 +19,8 @@ use itertools::Itertools;
 use lalrpop_util::ParseError;
 use tiny_keccak::{Hasher, Sha3};
 
+use crate::{log, rust};
+
 use std::fs;
 use std::io::{self, BufRead, Read, Write};
 use std::path::{Path, PathBuf};

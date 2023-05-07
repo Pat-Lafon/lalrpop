@@ -1,0 +1,19 @@
+[package]
+name = "lalrpop-parser"
+workspace = ".."
+
+repository.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+version.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+string_cache = { version = "0.8", default_features = false }
+unicode-xid = { version = "0.2", default_features = false }
+ascii-canvas = { version = "3.0", default_features = false }
+itertools = { version = "0.10", default_features = false, features = ["use_std"] }
+regex-syntax = { workspace = true }
+
+lalrpop-util = { path = "../lalrpop-util", version = "0.19.10" }

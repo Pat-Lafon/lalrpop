@@ -10,6 +10,8 @@ use crate::lr1::lookahead::*;
 use crate::tls::Tls;
 use std::env;
 
+use crate::{log, profile};
+
 #[cfg(test)]
 mod test;
 

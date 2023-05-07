@@ -5,6 +5,8 @@ use crate::lr1::lane_table::table::context_set::ContextSet;
 use crate::lr1::lane_table::table::LaneTable;
 use ena::unify::InPlaceUnificationTable;
 
+use crate::{debug, log};
+
 /// The "merge" phase of the algorithm is described in "Step 3c" of
 /// [the README][r].  It consists of walking through the various
 /// states in the lane table and merging them into sets of states that

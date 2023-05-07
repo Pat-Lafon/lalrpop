@@ -208,6 +208,7 @@ dependencies = [
  "ena",
  "is-terminal",
  "itertools",
+ "lalrpop-parser",
  "lalrpop-util",
  "petgraph",
  "pico-args",
@@ -217,6 +218,17 @@ dependencies = [
  "string_cache",
  "term",
  "tiny-keccak",
+]
+
+[[package]]
+name = "lalrpop-parser"
+version = "0.19.10"
+dependencies = [
+ "ascii-canvas",
+ "itertools",
+ "lalrpop-util",
+ "regex-syntax",
+ "string_cache",
  "unicode-xid",
 ]
 

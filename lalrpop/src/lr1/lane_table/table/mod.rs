@@ -21,6 +21,8 @@ use std::default::Default;
 use std::fmt::{Debug, Error, Formatter};
 use std::iter;
 
+use crate::{debug, log};
+
 pub mod context_set;
 use self::context_set::{ContextSet, OverlappingLookahead};
 

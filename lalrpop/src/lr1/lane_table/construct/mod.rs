@@ -18,6 +18,8 @@ use self::merge::Merge;
 mod state_set;
 use self::state_set::StateSet;
 
+use crate::{debug, log};
+
 pub struct LaneTableConstruct<'grammar> {
     grammar: &'grammar Grammar,
     first_sets: FirstSets,

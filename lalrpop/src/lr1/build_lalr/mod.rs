@@ -5,8 +5,10 @@ use crate::grammar::repr::*;
 use crate::lr1::build;
 use crate::lr1::core::*;
 use crate::lr1::lookahead::*;
-use crate::tls::Tls;
 use itertools::Itertools;
+
+use crate::tls::Tls;
+use crate::{log, profile};
 
 #[cfg(test)]
 mod test;

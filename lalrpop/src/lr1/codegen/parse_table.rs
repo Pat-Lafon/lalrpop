@@ -15,6 +15,8 @@ use string_cache::DefaultAtom as Atom;
 
 use super::base::CodeGenerator;
 
+use crate::rust;
+
 const DEBUG_PRINT: bool = false;
 
 pub fn compile<'grammar, W: Write>(

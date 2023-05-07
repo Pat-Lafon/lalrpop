@@ -15,6 +15,8 @@ use crate::tls::Tls;
 use crate::util::{Escape, Sep};
 use std::io::{self, Write};
 
+use crate::rust;
+
 use super::base::CodeGenerator;
 
 pub fn compile<'grammar, W: Write>(

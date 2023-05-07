@@ -6,6 +6,7 @@ members = [
         "doc/whitespace",
         "lalrpop-test",
         "lalrpop-util",
+        "lalrpop-parser",
         "lalrpop",
 ]
 resolver = "2"

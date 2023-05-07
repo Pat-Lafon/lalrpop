@@ -14,6 +14,7 @@ use std::io::{self, Write};
 pub const fn assert_rust_write<W>(_: &RustWrite<W>) {}
 
 /// Like [`std::writeln!`], but for writing Rust code to a [`RustWrite`], which handles indentation.
+#[macro_export]
 macro_rules! rust {
     ($w:expr) => {{
         #[cfg(debug_assertions)]
