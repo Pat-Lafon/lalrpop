@@ -225,11 +225,11 @@ build = &quot;build.rs&quot; # LALRPOP preprocessing
 
 # The generated code depends on lalrpop-util.
 [dependencies]
-lalrpop-util = &quot;0.19.10&quot;
+lalrpop-util = &quot;0.20.0&quot;
 
 # Add a build-time dependency on the lalrpop library:
 [build-dependencies]
-lalrpop = &quot;0.19.10&quot;
+lalrpop = &quot;0.20.0&quot;
 # If you are supplying your own external lexer you can disable default features so that the
 # built-in lexer feature is not included
 # lalrpop = { version = &quot;0.19.1&quot;, default-features = false }
@@ -304,10 +304,10 @@ version = &quot;0.1.0&quot;
 authors = [&quot;Niko Matsakis &lt;niko@alum.mit.edu&gt;&quot;]
 
 [build-dependencies] # &lt;-- We added this and everything after!
-lalrpop = &quot;0.19.10&quot;
+lalrpop = &quot;0.20.0&quot;
 
 [dependencies]
-lalrpop-util = &quot;0.19.10&quot;
+lalrpop-util = &quot;0.20.0&quot;
 </code></pre>
 <p>Cargo can run <a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">build scripts</a> as a pre-processing step,
 named <code>build.rs</code> by default. The <code>[build-dependencies]</code>
@@ -1288,6 +1288,21 @@ To this end <code>ignore patterns</code> can be specified.</p>
     r&quot;/\*[^*]*\*+(?:[^/*][^*]*\*+)*/&quot; =&gt; { },  // Skip `/* comments */`
 }
 </code></pre>
+<h4 id="unicode-compatibility"><a class="header" href="#unicode-compatibility">Unicode compatibility</a></h4>
+<p>LALRPOP is capable of lexing tokens that match the full unicode character set,
+or those that just match ASCII.  If you need unicode matching, you should
+enable <code>features = [ &quot;unicode&quot; ]</code> in your Cargo.toml.  Because lexing unicode
+requires loading the full unicode character set, enabling this feature will
+increase binary size, so you may wish to avoid it if you do not need unicode
+support.</p>
+<p>It's important to note that <a href="https://docs.rs/regex/latest/regex/#perl-character-classes-unicode-friendly">certain character classes</a> from perl
+regex extensions are &quot;unicode friendly&quot;, and require unicode support.  For
+example, &quot;\s&quot; matches unicode whitespace characters, not just ASCII ones, and
+likewise &quot;\d&quot; matches unicode digits (such as numerals in non-latin character
+sets).  If you use those patterns in your lexer, you will require unicode.</p>
+<p>You may wish to match only the ASCII subset of these characters, in which case,
+you can use the ASCII only character classes described <a href="https://docs.rs/regex/latest/regex/#ascii-character-classes">here</a> as
+substitutes and avoid adding unicode dependencies.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="lexing-raw-delimited-content"><a class="header" href="#lexing-raw-delimited-content">Lexing raw delimited content</a></h1>
 <p>Our calculator example operated on numbers and arithmetic operators.
 There is no overlap between the characters for numeric digits (<code>0</code>, <code>1</code>, ...),
