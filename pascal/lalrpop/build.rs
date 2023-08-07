@@ -1,3 +1,5 @@
+extern crate lalrpop;
+
 fn main() {
     lalrpop::Configuration::new()
         .emit_comments(true)

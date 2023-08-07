@@ -1,3 +1,5 @@
+extern crate whitespace;
+
 fn main() {
     use std::io::*;
 
