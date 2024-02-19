@@ -226,7 +226,7 @@ for your tokens:</p>
 </span>use std::fmt;  // to implement the Display trait
 use logos::Logos;
 
-#[derive(Logos, clone, Debug, PartialEq)]
+#[derive(Logos, Clone, Debug, PartialEq)]
 pub enum Token {
   #[token("var")]
   KeywordVar,
@@ -235,7 +235,7 @@ pub enum Token {
 
   #[regex("[_a-zA-Z][_0-9a-zA-Z]*", |lex| lex.slice().parse())]
   Identifier(String),
-  #[regex("\d+", |lex| lex.slice().parse())]
+  #[regex(r"\d+", |lex| lex.slice().parse())]
   Integer(i64),
 
   #[token("(")]
@@ -307,7 +307,7 @@ any other name), we will implement the Lexer as required by LALRPOP.</p>
 </span><span class="boring">fn main() {
 </span>use logos::{Logos, SpannedIter};
 
-use crate::path::to::tokens::Token; // your enum
+use crate::token::Token; // your enum
 
 pub type Spanned&lt;Tok, Loc, Error&gt; = Result&lt;(Loc, Tok, Loc), Error&gt;;
 
@@ -400,10 +400,10 @@ pub Statement: Box&lt;ast::Statement&gt; = {
 }
 
 pub Expression: Box&lt;ast::Expression&gt; = {
-  #[precedence(lvl="1")
+  #[precedence(level="1")]
   Term,
 
-  #[precedence(lvl="2")] #[assoc(side="left")]
+  #[precedence(level="2")] #[assoc(side="left")]
   &lt;lhs:Expression&gt; "*" &lt;rhs:Expression&gt; =&gt; {
     Box::new(ast::Expression::BinaryOperation {
       lhs,
@@ -419,7 +419,7 @@ pub Expression: Box&lt;ast::Expression&gt; = {
     })
   },
 
-  #[precedence(lvl="3")]
+  #[precedence(level="3")] #[assoc(side="left")]
   &lt;lhs:Expression&gt; "+" &lt;rhs:Expression&gt; =&gt; {
     Box::new(ast::Expression::BinaryOperation {
       lhs,
@@ -436,14 +436,14 @@ pub Expression: Box&lt;ast::Expression&gt; = {
   },
 }
 
-pub Term: Box&lt;ast::Expression&gt; =&gt; {
+pub Term: Box&lt;ast::Expression&gt; = {
   &lt;val:"int"&gt; =&gt; {
     Box::new(ast::Expression::Integer(val))
   },
   &lt;name:"identifier"&gt; =&gt; {
     Box::new(ast::Expression::Variable(name))
   },
-  "(" Expression ")",
+  "(" &lt;e:Expression&gt; ")" =&gt; e
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Our grammar is now complete.</p>
