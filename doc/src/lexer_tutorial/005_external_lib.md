@@ -62,7 +62,7 @@ for your tokens:
 use std::fmt;  // to implement the Display trait
 use logos::Logos;
 
-#[derive(Logos, clone, Debug, PartialEq)]
+#[derive(Logos, Clone, Debug, PartialEq)]
 pub enum Token {
   #[token("var")]
   KeywordVar,
@@ -71,7 +71,7 @@ pub enum Token {
 
   #[regex("[_a-zA-Z][_0-9a-zA-Z]*", |lex| lex.slice().parse())]
   Identifier(String),
-  #[regex("\d+", |lex| lex.slice().parse())]
+  #[regex(r"\d+", |lex| lex.slice().parse())]
   Integer(i64),
 
   #[token("(")]
@@ -154,7 +154,7 @@ First, we define our types and structures:
 ```rust
 use logos::{Logos, SpannedIter};
 
-use crate::path::to::tokens::Token; // your enum
+use crate::token::Token; // your enum
 
 pub type Spanned<Tok, Loc, Error> = Result<(Loc, Tok, Loc), Error>;
 
@@ -255,10 +255,10 @@ pub Statement: Box<ast::Statement> = {
 }
 
 pub Expression: Box<ast::Expression> = {
-  #[precedence(lvl="1")
+  #[precedence(level="1")]
   Term,
 
-  #[precedence(lvl="2")] #[assoc(side="left")]
+  #[precedence(level="2")] #[assoc(side="left")]
   <lhs:Expression> "*" <rhs:Expression> => {
     Box::new(ast::Expression::BinaryOperation {
       lhs,
@@ -274,7 +274,7 @@ pub Expression: Box<ast::Expression> = {
     })
   },
 
-  #[precedence(lvl="3")]
+  #[precedence(level="3")] #[assoc(side="left")]
   <lhs:Expression> "+" <rhs:Expression> => {
     Box::new(ast::Expression::BinaryOperation {
       lhs,
@@ -291,14 +291,14 @@ pub Expression: Box<ast::Expression> = {
   },
 }
 
-pub Term: Box<ast::Expression> => {
+pub Term: Box<ast::Expression> = {
   <val:"int"> => {
     Box::new(ast::Expression::Integer(val))
   },
   <name:"identifier"> => {
     Box::new(ast::Expression::Variable(name))
   },
-  "(" Expression ")",
+  "(" <e:Expression> ")" => e
 }
 ```
 
