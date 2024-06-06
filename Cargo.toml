@@ -32,3 +32,6 @@ regex-automata = { version = "0.4", default-features = false, features = [
         "syntax",
         "hybrid",
 ] }
+
+[workspace.lints.rust]
+rust_2018_idioms = "warn"

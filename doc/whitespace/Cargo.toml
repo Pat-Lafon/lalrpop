@@ -11,3 +11,6 @@ path = "../../lalrpop"
 [dependencies.lalrpop-util]
 version = "0.20.2"
 path = "../../lalrpop-util"
+
+[lints]
+workspace = true

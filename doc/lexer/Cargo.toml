@@ -12,3 +12,6 @@ lalrpop-util = { version = "0.20.2", path = "../../lalrpop-util", features = [
     "unicode",
 ] }
 logos = "0.14.0"
+
+[lints]
+workspace = true

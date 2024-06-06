@@ -21,3 +21,6 @@ default = ["std", "unicode"]
 
 [package.metadata.docs.rs]
 features = ["lexer"]
+
+[lints]
+workspace = true
