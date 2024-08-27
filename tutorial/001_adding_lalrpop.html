@@ -199,10 +199,10 @@ authors = ["Niko Matsakis &lt;niko@alum.mit.edu&gt;"]
 edition = "2021"
 
 [build-dependencies] # &lt;-- We added this and everything after!
-lalrpop = "0.20.2"
+lalrpop = "0.21.0"
 
 [dependencies]
-lalrpop-util = { version = "0.20.2", features = ["lexer", "unicode"] }
+lalrpop-util = { version = "0.21.0", features = ["lexer", "unicode"] }
 </code></pre>
 <p>Cargo can run <a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">build scripts</a> as a pre-processing step,
 named <code>build.rs</code> by default. The <code>[build-dependencies]</code>
@@ -233,6 +233,21 @@ create a submodule <code>foo::grammar</code>):</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>lalrpop_mod!(grammar);
+<span class="boring">}</span></code></pre></pre>
+<h2 id="attributes"><a class="header" href="#attributes">Attributes</a></h2>
+<p>The code that LALRPOP generates sometimes falls afoul of code linters for
+cosmetic reasons which don't apply to macro generated code. Currently, there is
+not a blanket <code>#[automatically_derived]</code> attribute in the generated parser
+because action code provided by the user may be worth linting on. Users can
+provide any number of attributes which they would like applied to the generated
+module. This is particularly useful for suppressing noisy lints.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>lalrpop_mod!(
+    #[allow(clippy::ptr_arg)]
+    #[rustfmt::skip]
+    parser
+);
 <span class="boring">}</span></code></pre></pre>
 
                     </main>
