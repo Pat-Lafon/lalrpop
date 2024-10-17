@@ -251,14 +251,14 @@ here is a quick 'cheat sheet' for setting up your project. First, add
 the following lines to your <code>Cargo.toml</code>:</p>
 <pre><code class="language-toml"># The generated code depends on lalrpop-util.
 [dependencies]
-lalrpop-util = "0.21.0"
+lalrpop-util = "0.22.0"
 
 # Add a build-time dependency on the lalrpop library:
 [build-dependencies]
-lalrpop = "0.21.0"
+lalrpop = "0.22.0"
 # If you are supplying your own external lexer you can disable default features so that the
 # built-in lexer feature is not included
-# lalrpop = { version = "0.21.0", default-features = false }
+# lalrpop = { version = "0.22.0", default-features = false }
 </code></pre>
 <p>Next create a <a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html"><code>build.rs</code></a>
 file that looks like:</p>
@@ -371,7 +371,7 @@ authors = ["Niko Matsakis &lt;niko@alum.mit.edu&gt;"]
 edition = "2021"
 
 [build-dependencies] # &lt;-- We added this and everything after!
-lalrpop = "0.21.0"
+lalrpop = "0.22.0"
 
 [dependencies]
 lalrpop-util = { version = "0.21.0", features = ["lexer", "unicode"] }
@@ -2282,16 +2282,45 @@ in your configuration:</p>
 <p>For each <code>foo.lalrpop</code> file you can simply have <code>mod foo;</code> in your source tree.
 The <code>lalrpop_mod</code> macro is not useful in this mode.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="conditional-compilation"><a class="header" href="#conditional-compilation">Conditional compilation</a></h1>
-<p>LALRPOP support conditional compilation of public non-terminal declarations via
+<p>LALRPOP support conditional compilation of non-terminal declarations via
 <code>#[cfg(feature = "FEATURE")]</code> attributes. If run in a build script LALRPOP will
 automatically pickup the features from <code>cargo</code> and use those. Alternatively an
 explicit set of features can be set using the <code>Configuration</code> type.</p>
+<p>Like rust's <code>cfg</code> attribute, the syntax accepts <code>not()</code>, <code>any()</code> and <code>all()</code>
+arguments, even nested.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[cfg(feature = "FEATURE")]
-pub MyRule : () = {
+pub MyRule1 : () = {
     ...
 };
+
+#[cfg(any(feature = "FEATURE_A", all(not(feature = "FEATURE_B"), feature = "FEATURE_C")))]
+pub MyRule2 : () = {
+    ...
+};
+
+pub MyRule3: () = {
+    #[cfg(feature = "FEATURE_A")]
+    "A" =&gt; (),
+    #[cfg(feature = "FEATURE_B")]
+    "B" =&gt; (),
+};
+<span class="boring">}</span></code></pre></pre>
+<p>When using a custom lexer:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>extern {
+  type Location = usize;
+  type Error = LexicalError;
+  enum Token {
+    "int" =&gt; Token::Integer(&lt;i64&gt;),
+    "+" =&gt; Token::OperatorAdd,
+    // Feature flag the left shift operator
+    #[cfg(feature = "bit")]
+    "&lt;&lt;" =&gt; Token::OperatorShl,
+  }
+}
 <span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="location-tracking"><a class="header" href="#location-tracking">Location Tracking</a></h1>
 <p>Sometimes it may be helpful to know where in the input stream a particular
